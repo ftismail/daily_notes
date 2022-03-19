@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('./controllers/userController')
-const multer = require('multer');
-const upload = multer({dest: __dirname + '/upload/images'});
+const upload = require('./middlewares/upload')
 ///get///
 router.get('/', userController.home )
 router.get('/sign-up', userController.registerPage )
