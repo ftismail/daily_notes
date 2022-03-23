@@ -1,101 +1,442 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="/css/fontawesome-all.css" rel="stylesheet">
-    <link href="/css/swiper.css" rel="stylesheet">
-	<link href="/css/magnific-popup.css" rel="stylesheet">
-	<link href="/css/styles.css" rel="stylesheet">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Tivo is a HTML landing page template built with Bootstrap to help you crate engaging presentations for SaaS apps and convert visitors into users.">
+    <meta name="author" content="Inovatik">
+
+    <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
+	<meta property="og:site_name" content="" /> <!-- website name -->
+	<meta property="og:site" content="" /> <!-- website link -->
+	<meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
+	<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+	<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+	<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+	<meta property="og:type" content="article" />
+
+    <!-- Website Title -->
+    <title>Tivo - SaaS App HTML Landing Page Template</title>
+    
+    <!-- Styles -->
+    <link href="/css/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="/css/mystyle.css" rel="stylesheet">
+	<!-- Favicon  -->
+    <link rel="icon" href="images/favicon.png">
 </head>
-<body>
-     <!-- Preloader -->
-	<div class="spinner-wrapper">
-        <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
+
+<body >
+    
+  <!-- Preloader -->
+<div class="spinner-wrapper">
+      <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+      </div>
+</div>
+  <!-- end of preloader -->
+<div class="container bootdey">
+<div class="content-page">
+    <div class="profile-banner" style="background:url(https://bootdey.com/img/Content/bg1.jpg);">
+        <div class="col-sm-3 avatar-container">
+            <%if(user.img){%>
+                <img src='/images/<%=user.img%>' class="img-circle profile-avatar" alt="User avatar">
+            <%}else{%>
+                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar">
+            <%}%>
+            <%if(user.username == correntUser.username){%>
+            <div class="upload-container" id="upload_img">
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="photo" >
+                    <input type="submit">
+                </form>
+            </div>
+            <%}%>
+        </div>
+        <div class="col-sm-12 profile-actions text-end">
+            <button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Friends</button>
+            <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i> Send Message</button>
         </div>
     </div>
-    <!-- end of preloader -->
-    <div class="page-container row">
-        <div class="sidebar p-3 ps-5 bg-dark text-white d-flex flex-column col-md-3">
+    <div class="content">
 
-            <a class="d-flex flex-column justify-content-between align-items-center mb-3 mb-md-0  text-white text-decoration-none" href="/">
-                <div class="img-container me-3 mb-3 d-flex flex-column">
-                    <% if (user.img){%>
-                        <img class="bi rounded" src="/images/<%=user.img%>" alt="" srcset="">
-                    <%}else{%>
-                        <img class="bi rounded" src="/images/download.jpg" alt="" srcset="">
+        <div class="row">
+            <div class="col-sm-3" id="forImgProfile">
+                <!-- Begin user profile -->
+                <div class="text-center user-profile-2" style="margin-top:120px">
+                    <ul class="list-group">
+                      <li class="list-group-item">
+                        <h4><b class="text-capitalize"><%=user.username%></b></h4>
+                        <h5>Administrator</h5>
+                      </li>
+                      <li class="list-group-item ">
+                        <span class="badge bg-info">1,245</span>
+                        Text Notes
+                      </li>
+                      <li class="list-group-item">
+                        <span class="badge bg-info">245</span>
+                        Voice Notes
+                      </li>
+                      <li class="list-group-item">
+                        <span class="badge bg-info bg-info">1,245</span>
+                        Tweets
+                      </li>
+                    </ul>
+                        
+                        
+                    <% if(user.username == correntUser.username){%>
+                      <!-- User button -->
+                      <div class="user-button">
+                        <div class="row">
+                            <div class="col-lg-6">
+                              <form action="/logout" method="post">
+                                <button href="/logout" type="submit" class="btn btn-danger btn-sm btn-block">LOGOUT</button></form>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="/edit" type="button" class="btn btn-warning btn-sm btn-block"><i class="fas fa-cogs"></i>Edit Profile</a>
+                            </div>
+                        </div>
+                    </div><!-- End div .user-button -->
                     <%} %>
                     
-                </div>
-                <form action="/upload" method="post" enctype="multipart/form-data">
-                    <input type="file" accept="image/*" name="photo" >
-                    <input type="submit" value="upload">
-            </form>
-                <span class="fs-4 me-3"><strong> <%= user.username %> </strong> </span>
-            </a>
-            <hr>
-
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item"><a href="" class="nav-link text-white"><img class="me-2" width="16" height="16" src="/images/logo.svg" >daily notes</a></li>
-                <li class="nav-item">
-                    <% if(correntUser.username == user.username && correntUser.day == new Date().getDay()){%>
-                        <button class="btn rounded btn-danger" >
-                        <a href="" class="nav-link text-white"><img class="me-2" width="16" height="16" src="images/logo.svg" >weekly note</a>
-                        </button>
-                    <%}else{%>
-                        <button class="btn rounded btn-danger" disabled>
-                            <a href="" class="nav-link text-white">sweekly note</a>
-                        </button>
-                    <%}%>
-                    
-                </li>
-                <li class="nav-item"><a href="" class="nav-link text-white"><img class="me-2" width="16" height="16" src="images/logo.svg" >item</a></li>
-                <li class="nav-item"><a href="" class="nav-link text-white"><img class="me-2" width="16" height="16" src="images/logo.svg" >item</a></li>
-                <li class="nav-item"><a href="" class="nav-link text-white"><img class="me-2" width="16" height="16" src="images/logo.svg" >item</a></li>
-            </ul>
-            <hr>
-            <% if(correntUser.username == user.username){%>
-                <div class="dropdown">
-                    <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="mr-2" width="32" height="32" src="images/logo.svg" alt="" srcset="">
-                        Edit profile
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a href="#" class="dropdown-item">new Note</a></li>
-                        <li><a href="#" class="dropdown-item">new Note</a></li>
-                        <li> <hr class="dropdown-divider"> </li>
-                        <li>
-                            <form action="/logout" method="POST" class="dropdown-item">
-                                <button class="btn btn-danger">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-
-            <%}%>
+                </div><!-- End div .box-info -->
+                <!-- Begin user profile -->
+            </div><!-- End div .col-sm-4 -->
             
-
+            <div class="col-sm-9">
+                <div class="widget widget-tabbed">
+                    
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        
+                        
+                        <!-- Tab timeline -->
+                        <div class="tab-pane animated active fadeInRight" id="my-timeline">
+                            <div class="user-profile-content">
+                                
+                                <!-- Begin timeline -->
+                                <div class="the-timeline">
+                                  <% postErr.forEach((message)=>{ %>
+                                    <div class="alert alert-danger text-center" > <%= message %> </div>
+                               <% }) %>
+                                    <form action="/post" method="POST" role="form" class="post-to-timeline">
+                                        <textarea name="post" class="form-control" style="height: 70px;margin-bottom:10px;" placeholder="Whats on your mind..."></textarea>
+                                        <div class="row">
+                                        <div class="col-sm-6">
+                                            <a class="bg-white btn btn-sm btn-default pe-auto"><i class="fa-solid fa-microphone fa-3x"></i></a>
+                                        </div>
+                                        <div class="col-sm-6 text-end"><button type="submit" class="btn btn-primary">Post</button></div>
+                                        </div>
+                                    </form>
+                                    <br><br>
+                                    <ul>
+                                        <li>
+                                            <div class="the-date">
+                                                <span>01</span>
+                                                <small>Feb</small>
+                                            </div>
+                                            <h4>Lorem ipsum dolor!</h4>
+                                            <p>
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <div class="the-date">
+                                                <span>31</span>
+                                                <small>Jan</small>
+                                            </div>
+                                            <h4>Yohoo! you can put video here</h4>
+                                            <div class="videoWrapper">
+                                            <iframe src="//player.vimeo.com/video/85847275?title=0&amp;byline=0&amp;portrait=0"></iframe>
+                                            </div>
+                                            <p>
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <div class="the-date">
+                                                <span>25</span>
+                                                <small>Jan</small>
+                                            </div>
+                                            <h4>You also can put Soundcloud iframe here</h4>
+                                            <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/132890481&amp;color=ff9900&amp;auto_play=false&amp;hide_related=false&amp;show_artwork=true"></iframe>
+                                            <p>
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                            </p>
+                                        </li>
+                                        <li class="the-year"><p>2013</p></li>
+                                        <li>
+                                            <div class="the-date">
+                                                <span>20</span>
+                                                <small>Dec</small>
+                                            </div>
+                                            <p>
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <div class="the-date">
+                                                <span>27</span>
+                                                <small>Nov</small>
+                                            </div>
+                                            <p>
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div><!-- End div .the-timeline -->
+                                <!-- End timeline -->
+                            </div><!-- End div .user-profile-content -->
+                        </div><!-- End div .tab-pane -->
+                        <!-- End Tab timeline -->
+                        
+                        <!-- Tab about -->
+                        <div class="tab-pane animated fadeInRight" id="about">
+                            <div class="user-profile-content">
+                                <h5><strong>ABOUT</strong> ME</h5>
+                                <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+                                </p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5><strong>CONTACT</strong> ME</h5>
+                                            <address>
+                                                <strong>Phone</strong><br>
+                                                <abbr title="Phone">+62 857 123 4567</abbr>
+                                            </address>
+                                            <address>
+                                                <strong>Email</strong><br>
+                                                <a href="mailto:#">first.last@example.com</a>
+                                            </address>
+                                            <address>
+                                                <strong>Website</strong><br>
+                                                <a href="http://r209.com">http://r209.com</a>
+                                            </address>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h5><strong>MY</strong> SKILLS</h5>
+                                        <p>UI Design</p>
+                                        <p>Clean and Modern Web Design</p>
+                                        <p>PHP and MySQL Programming</p>
+                                        <p>Vector Design</p>
+                                    </div>
+                                </div><!-- End div .row -->
+                            </div><!-- End div .user-profile-content -->
+                        </div><!-- End div .tab-pane -->
+                        <!-- End Tab about -->
+                        
+                        
+                        <!-- Tab user activities -->
+                        <div class="tab-pane animated fadeInRight" id="user-activities">
+                            <div class="scroll-user-widget">
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>John Doe</strong> Uploaded a photo <strong>"DSC000254.jpg"</strong>
+                                        <br><i>2 minutes ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>John Doe</strong> Created an photo album  <strong>"Indonesia Tourism"</strong>
+                                        <br><i>8 minutes ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Annisa</strong> Posted an article  <strong>"Yogyakarta never ending Asia"</strong>
+                                        <br><i>an hour ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Ari Rusmanto</strong> Added 3 products
+                                        <br><i>3 hours ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Hana Sartika</strong> Send you a message  <strong>"Lorem ipsum dolor..."</strong>
+                                        <br><i>12 hours ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Johnny Depp</strong> Updated his avatar
+                                        <br><i>Yesterday</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>John Doe</strong> Uploaded a photo <strong>"DSC000254.jpg"</strong>
+                                        <br><i>2 minutes ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>John Doe</strong> Created an photo album  <strong>"Indonesia Tourism"</strong>
+                                        <br><i>8 minutes ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Annisa</strong> Posted an article  <strong>"Yogyakarta never ending Asia"</strong>
+                                        <br><i>an hour ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Ari Rusmanto</strong> Added 3 products
+                                        <br><i>3 hours ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Hana Sartika</strong> Send you a message  <strong>"Lorem ipsum dolor..."</strong>
+                                        <br><i>12 hours ago</i></p>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#fakelink">
+                                        <p><strong>Johnny Depp</strong> Updated his avatar
+                                        <br><i>Yesterday</i></p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!-- End div .scroll-user-widget -->
+                        </div><!-- End div .tab-pane -->
+                        <!-- End Tab user activities -->
+                        
+                        <!-- Tab user messages -->
+                        <div class="tab-pane animated fadeInRight" id="mymessage">
+                            <div class="scroll-user-widget">
+                                <ul class="media-list">
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">John Doe</a> <small>Just now</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Annisa</a> <small>Yesterday at 04:00 AM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Rusmanovski</a> <small>January 17, 2014 05:35 PM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Ari Rusmanto</a> <small>January 17, 2014 05:35 PM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Jenny Doe</a> <small>January 17, 2014 05:35 PM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">John Doe</a> <small>Just now</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Annisa</a> <small>Yesterday at 04:00 AM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Rusmanovski</a> <small>January 17, 2014 05:35 PM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Ari Rusmanto</a> <small>January 17, 2014 05:35 PM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                  <li class="media">
+                                    <a class="pull-left" href="#fakelink">
+                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Avatar">
+                                    </a>
+                                    <div class="media-body">
+                                      <h4 class="media-heading"><a href="#fakelink">Jenny Doe</a> <small>January 17, 2014 05:35 PM</small></h4>
+                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    </div>
+                                  </li>
+                                </ul>
+                            </div><!-- End div .scroll-user-widget -->
+                        </div><!-- End div .tab-pane -->
+                        <!-- End Tab user messages -->
+                    </div><!-- End div .tab-content -->
+                </div><!-- End div .box-info -->
+            </div>
         </div>
-        <section class="main col-md-9"></section>
+    </div>	
+</div>
+
+<div class="voice-container">
+  <a href='/profile/<%=correntUser.user_id%>' class="fa-times"><i class="pe-auto fas fa-times fa-2x"></i></a>
+  
+
+  <div class="container">
+    <h1 class="text-center">Record Your Voice</h1>
+    <div class="record-button-container text-center mt-5">
+      <button class="bg-transparent border btn record-button rounded-circle shadow-sm text-center" id="recordButton">
+        <img src="/images/microphone.png" alt="Record" class="img-fluid" />
+      </button>
     </div>
+  </div>
+  <div class="recorded-audio-container mt-5 d-none flex-column justify-content-center align-items-center" id="recordedAudioContainer">
+    <div class="actions mt-3">
+      <button class="btn btn-success rounded-pill" id="saveButton">Save</button>
+      <button class="btn btn-danger rounded-pill" id="discardButton">Discard</button>
+    </div>
+  </div>
 
+</div>
 
-
-    <script src="/js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
-    <script src="/js/popper.min.js"></script> <!-- Popper tooltip library for Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script><!-- Bootstrap framework -->
-    <script src="/js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
-    <script src="/js/swiper.min.js"></script> <!-- Swiper for image and text sliders -->
-    <script src="/js/jquery.magnific-popup.js"></script> <!-- Magnific Popup for lightboxes -->
-    <script src="/js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
-    <script src="/js/scripts.js"></script> <!-- Custom scripts -->
-</body>
-</html>
+<%-include('includes/footer')%>

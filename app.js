@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const flash = require('connect-flash')
@@ -15,6 +16,8 @@ app.use(sessionOption)
 app.use(flash())
 const router = require('./router')
 app.use(express.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.json())
 app.use(express.static('public'))
 app.use(express.static('upload'))

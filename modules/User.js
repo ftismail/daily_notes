@@ -72,17 +72,15 @@ class User {
             }
         })
     }
+
     login(){
-        
         return new Promise((resolve,reject)=>{
             usersCollection.findOne({email:this.data.email},(err,attemptedUser)=>{
                 if( attemptedUser && attemptedUser.password == this.data.password ){
                     resolve(attemptedUser)
-                    console.log('we one')
                 }
                 else{
                     reject('your email or password is wrong')
-                    console.log('dont work')
                 }
             })
         })
@@ -101,6 +99,7 @@ class User {
                         _id:result._id,
                         username:result.username,
                         email:result.email,
+                        day:result.day,
                         img:result.img
                     }
                     resolve(doc)

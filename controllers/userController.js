@@ -42,7 +42,6 @@ exports.upload = (req,res)=>{
     let user = new User(req.body)
     user.uploadImg(req.session.user.user_id,req)
     .then((results)=>{
-        req.userImg = results.img
         req.session.save(()=>{
             res.redirect(`/profile/${req.session.user.user_id}`)
         })
@@ -51,6 +50,29 @@ exports.upload = (req,res)=>{
         res.redirect('error')
     })
 }
+
+exports.uploadAudio = async (req,res,next)=>{
+    // let user = new User()
+    // user.uploadImg(req.session.user.user_id,req)
+    // .then((results)=>{
+    //     req.userImg = results.img
+    //     req.session.save(()=>{
+    //         res.redirect(`/profile/${req.session.user.user_id}`)
+    //     })
+    // })
+    // .catch((err)=>{
+    //     res.redirect('error')
+    // })
+    try {
+        await res.send({ success: true })
+        res.redirect('/')
+    } catch (error) {
+        console.log(error)
+    }
+    
+    // res.redirect('/')
+}
+
 exports.loginPage = (req,res)=>{
     res.render('login-page',{errors:req.flash('errors')})
 }
@@ -62,7 +84,6 @@ exports.logout = (req,res)=>{
 }
 
 exports.register = (req,res)=>{
-    console.log(req.body)
     let user = new User(req.body)
     user.register()
     .then((result)=>{
@@ -82,7 +103,7 @@ exports.registerPage = (req,res)=>{
     res.render('register-page',{regerr:req.flash('regerr')})
 }
 exports.profile = (req,res)=>{
-    res.render('profile',{user:req.profileUser,correntUser:req.session.user})
+    res.render('profile',{user:req.profileUser,correntUser:req.session.user,postErr:req.flash('posrtErr')})
     console.log(req.profileUser)
 }
 
