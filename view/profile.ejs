@@ -8,7 +8,6 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="Tivo is a HTML landing page template built with Bootstrap to help you crate engaging presentations for SaaS apps and convert visitors into users.">
     <meta name="author" content="Inovatik">
-
     <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
 	<meta property="og:site_name" content="" /> <!-- website name -->
 	<meta property="og:site" content="" /> <!-- website link -->
@@ -17,10 +16,8 @@
 	<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
 	<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
 	<meta property="og:type" content="article" />
-
     <!-- Website Title -->
     <title>Tivo - SaaS App HTML Landing Page Template</title>
-    
     <!-- Styles -->
     <link href="/css/all.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -49,14 +46,6 @@
             <%}else{%>
                 <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar">
             <%}%>
-            <%if(user.username == correntUser.username){%>
-            <div class="upload-container" id="upload_img">
-                <form action="/upload" method="POST" enctype="multipart/form-data">
-                    <input type="file" name="photo" >
-                    <input type="submit">
-                </form>
-            </div>
-            <%}%>
         </div>
         <div class="col-sm-12 profile-actions text-end">
             <button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Friends</button>
@@ -75,21 +64,15 @@
                         <h5>Administrator</h5>
                       </li>
                       <li class="list-group-item ">
-                        <span class="badge bg-info">1,245</span>
+                        <span class="badge bg-info"><%=text_posts.length%></span>
                         Text Notes
                       </li>
                       <li class="list-group-item">
-                        <span class="badge bg-info">245</span>
+                        <span class="badge bg-info"><%=voice_posts.length%></span>
                         Voice Notes
                       </li>
-                      <li class="list-group-item">
-                        <span class="badge bg-info bg-info">1,245</span>
-                        Tweets
-                      </li>
                     </ul>
-                        
-                        
-                    <% if(user.username == correntUser.username){%>
+                    <% if(user._id == correntUser.user_id){%>
                       <!-- User button -->
                       <div class="user-button">
                         <div class="row">
@@ -98,7 +81,7 @@
                                 <button href="/logout" type="submit" class="btn btn-danger btn-sm btn-block">LOGOUT</button></form>
                             </div>
                             <div class="col-lg-6">
-                                <a href="/edit" type="button" class="btn btn-warning btn-sm btn-block"><i class="fas fa-cogs"></i>Edit Profile</a>
+                                <a href="/edit-profile/<%=correntUser.user_id%>" type="button" class="btn btn-warning btn-sm btn-block"><i class="fas fa-cogs"></i>Edit Profile</a>
                             </div>
                         </div>
                     </div><!-- End div .user-button -->
@@ -110,20 +93,16 @@
             
             <div class="col-sm-9">
                 <div class="widget widget-tabbed">
-                    
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        
-                        
                         <!-- Tab timeline -->
                         <div class="tab-pane animated active fadeInRight" id="my-timeline">
                             <div class="user-profile-content">
-                                
                                 <!-- Begin timeline -->
                                 <div class="the-timeline">
                                   <% postErr.forEach((message)=>{ %>
                                     <div class="alert alert-danger text-center" > <%= message %> </div>
-                               <% }) %>
+                                    <% }) %>
                                     <form action="/post" method="POST" role="form" class="post-to-timeline">
                                         <textarea name="post" class="form-control" style="height: 70px;margin-bottom:10px;" placeholder="Whats on your mind..."></textarea>
                                         <div class="row">
@@ -134,61 +113,6 @@
                                         </div>
                                     </form>
                                     <br><br>
-                                    <ul>
-                                        <li>
-                                            <div class="the-date">
-                                                <span>01</span>
-                                                <small>Feb</small>
-                                            </div>
-                                            <h4>Lorem ipsum dolor!</h4>
-                                            <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="the-date">
-                                                <span>31</span>
-                                                <small>Jan</small>
-                                            </div>
-                                            <h4>Yohoo! you can put video here</h4>
-                                            <div class="videoWrapper">
-                                            <iframe src="//player.vimeo.com/video/85847275?title=0&amp;byline=0&amp;portrait=0"></iframe>
-                                            </div>
-                                            <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="the-date">
-                                                <span>25</span>
-                                                <small>Jan</small>
-                                            </div>
-                                            <h4>You also can put Soundcloud iframe here</h4>
-                                            <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/132890481&amp;color=ff9900&amp;auto_play=false&amp;hide_related=false&amp;show_artwork=true"></iframe>
-                                            <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
-                                            </p>
-                                        </li>
-                                        <li class="the-year"><p>2013</p></li>
-                                        <li>
-                                            <div class="the-date">
-                                                <span>20</span>
-                                                <small>Dec</small>
-                                            </div>
-                                            <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <div class="the-date">
-                                                <span>27</span>
-                                                <small>Nov</small>
-                                            </div>
-                                            <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
-                                            </p>
-                                        </li>
-                                    </ul>
                                 </div><!-- End div .the-timeline -->
                                 <!-- End timeline -->
                             </div><!-- End div .user-profile-content -->
@@ -196,220 +120,16 @@
                         <!-- End Tab timeline -->
                         
                         <!-- Tab about -->
-                        <div class="tab-pane animated fadeInRight" id="about">
-                            <div class="user-profile-content">
-                                <h5><strong>ABOUT</strong> ME</h5>
-                                <p>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
-                                </p>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h5><strong>CONTACT</strong> ME</h5>
-                                            <address>
-                                                <strong>Phone</strong><br>
-                                                <abbr title="Phone">+62 857 123 4567</abbr>
-                                            </address>
-                                            <address>
-                                                <strong>Email</strong><br>
-                                                <a href="mailto:#">first.last@example.com</a>
-                                            </address>
-                                            <address>
-                                                <strong>Website</strong><br>
-                                                <a href="http://r209.com">http://r209.com</a>
-                                            </address>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h5><strong>MY</strong> SKILLS</h5>
-                                        <p>UI Design</p>
-                                        <p>Clean and Modern Web Design</p>
-                                        <p>PHP and MySQL Programming</p>
-                                        <p>Vector Design</p>
-                                    </div>
-                                </div><!-- End div .row -->
-                            </div><!-- End div .user-profile-content -->
-                        </div><!-- End div .tab-pane -->
                         <!-- End Tab about -->
                         
                         
                         <!-- Tab user activities -->
-                        <div class="tab-pane animated fadeInRight" id="user-activities">
-                            <div class="scroll-user-widget">
-                                <ul class="media-list">
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>John Doe</strong> Uploaded a photo <strong>"DSC000254.jpg"</strong>
-                                        <br><i>2 minutes ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>John Doe</strong> Created an photo album  <strong>"Indonesia Tourism"</strong>
-                                        <br><i>8 minutes ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Annisa</strong> Posted an article  <strong>"Yogyakarta never ending Asia"</strong>
-                                        <br><i>an hour ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Ari Rusmanto</strong> Added 3 products
-                                        <br><i>3 hours ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Hana Sartika</strong> Send you a message  <strong>"Lorem ipsum dolor..."</strong>
-                                        <br><i>12 hours ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Johnny Depp</strong> Updated his avatar
-                                        <br><i>Yesterday</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>John Doe</strong> Uploaded a photo <strong>"DSC000254.jpg"</strong>
-                                        <br><i>2 minutes ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>John Doe</strong> Created an photo album  <strong>"Indonesia Tourism"</strong>
-                                        <br><i>8 minutes ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Annisa</strong> Posted an article  <strong>"Yogyakarta never ending Asia"</strong>
-                                        <br><i>an hour ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Ari Rusmanto</strong> Added 3 products
-                                        <br><i>3 hours ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Hana Sartika</strong> Send you a message  <strong>"Lorem ipsum dolor..."</strong>
-                                        <br><i>12 hours ago</i></p>
-                                        </a>
-                                    </li>
-                                    <li class="media">
-                                        <a href="#fakelink">
-                                        <p><strong>Johnny Depp</strong> Updated his avatar
-                                        <br><i>Yesterday</i></p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div><!-- End div .scroll-user-widget -->
-                        </div><!-- End div .tab-pane -->
+                        
                         <!-- End Tab user activities -->
                         
                         <!-- Tab user messages -->
-                        <div class="tab-pane animated fadeInRight" id="mymessage">
-                            <div class="scroll-user-widget">
-                                <ul class="media-list">
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">John Doe</a> <small>Just now</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Annisa</a> <small>Yesterday at 04:00 AM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Rusmanovski</a> <small>January 17, 2014 05:35 PM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Ari Rusmanto</a> <small>January 17, 2014 05:35 PM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Jenny Doe</a> <small>January 17, 2014 05:35 PM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">John Doe</a> <small>Just now</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Annisa</a> <small>Yesterday at 04:00 AM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Rusmanovski</a> <small>January 17, 2014 05:35 PM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Ari Rusmanto</a> <small>January 17, 2014 05:35 PM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                  <li class="media">
-                                    <a class="pull-left" href="#fakelink">
-                                      <img class="media-object user-message" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Avatar">
-                                    </a>
-                                    <div class="media-body">
-                                      <h4 class="media-heading"><a href="#fakelink">Jenny Doe</a> <small>January 17, 2014 05:35 PM</small></h4>
-                                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                                    </div>
-                                  </li>
-                                </ul>
-                            </div><!-- End div .scroll-user-widget -->
-                        </div><!-- End div .tab-pane -->
+                        
+                        
                         <!-- End Tab user messages -->
                     </div><!-- End div .tab-content -->
                 </div><!-- End div .box-info -->
@@ -420,8 +140,6 @@
 
 <div class="voice-container">
   <a href='/profile/<%=correntUser.user_id%>' class="fa-times"><i class="pe-auto fas fa-times fa-2x"></i></a>
-  
-
   <div class="container">
     <h1 class="text-center">Record Your Voice</h1>
     <div class="record-button-container text-center mt-5">

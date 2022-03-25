@@ -45,6 +45,30 @@ class User {
           
       }
 
+      validateEdit(){
+        return new Promise(async(resolve,reject)=>{
+            if (this.data.username == '') {this.errors.push('you must entre a name')}
+            if (!validator.isEmail(this.data.email)) {this.errors.push('you must  entre an email')}
+            if (this.data.username != '' && !validator.isAlphanumeric(this.data.username)) {this.errors.push('user name should include only lettres and numbers')}
+            if (this.data.password == '') {this.errors.push('you must should entre a password')}
+            if (this.data.password.length > 0 && this.data.password.length < 4) {this.errors.push('your password must be more than 3 characters')}
+            if (this.data.password.length > 12) {this.errors.push('your password must be less than 12 characters')}
+            if (this.data.username.length > 0 && this.data.username.length < 4) {this.errors.push('your username must be more than 3 characters')}
+            if (this.data.username.length > 12) {this.errors.push('your username must be less than 12 characters')}
+            //////////////only if username valid///////////////
+            
+              let userExists = await usersCollection.findOne({username:this.data.username})
+              if (userExists && userExists.username != this.data.username) {this.errors.push('sorry this username is already token')}
+            
+            //////////////only if email valid///////////////
+            if (validator.isEmail(this.data.email)) {
+              let emailExists = await usersCollection.findOne({email:this.data.email})
+              if (emailExists&&emailExists.email != this.data.email ) {this.errors.push('sorry this email is already token')}
+            }
+            resolve()
+         })
+      }
+
     register(){
         return new Promise(async (resolve,reject)=>{
             this.cleanUp()
@@ -61,7 +85,7 @@ class User {
       }
     uploadImg(id,req){
         return new Promise(async(resolve,reject)=>{
-            console.log(req.file)
+            
             try {
                 if(req.file) {
                 let user = await usersCollection.findOneAndUpdate({_id:new ObjectId(id)},{$set:{"img":req.file.filename}},{returnNewDocument: true})
@@ -92,13 +116,14 @@ class User {
                 reject()
                 return
             }
-            usersCollection.findOne({_id:new ObjectId(id),})
+            usersCollection.findOne({_id:new ObjectId(id)})
             .then((result)=>{
                 if (result) {
                     let doc={
                         _id:result._id,
                         username:result.username,
                         email:result.email,
+                        password:result.password,
                         day:result.day,
                         img:result.img
                     }
@@ -106,14 +131,25 @@ class User {
                 }
                 else{
                     reject()
-                    console.log("first")
                 }
             })
             .catch((err)=>{
                 reject(err)
-                console.log("second")
+                
             })
 
+        })
+    }
+
+    editProfileInfo(user_id){
+        return new Promise( async(resolve,reject)=>{
+            if (!this.errors.length) {
+                let results = await usersCollection.findOneAndUpdate({_id:new ObjectId(user_id) },{$set:{username:this.data.username,email:this.data.email,password:this.data.password,day:this.data.day}},{returnNewDocument: true})
+                resolve(results.value)
+            }
+            else{
+            reject(this.errors)
+            }
         })
     }
 }

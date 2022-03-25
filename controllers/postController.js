@@ -24,3 +24,12 @@ exports.createPost = (req,res)=>{
         })
     });
 }
+exports.getPosts = (req,res,next)=>{
+    let posts = new Post()
+    posts.findPosts(req.profile._id)
+    .then((result) => {
+        console.log(result)
+    }).catch((err) => {
+        console.log(result)
+    });
+}

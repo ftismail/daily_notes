@@ -1,5 +1,7 @@
 const session = require('express-session')
+const Post = require("../modules/Posts");
 const User = require('../modules/User')
+const postsType = require('../middlewares/postsType')
 exports.login = (req,res)=>{
     let user = new User(req.body)
     user.login()
@@ -13,7 +15,7 @@ exports.login = (req,res)=>{
         req.session.save(function(){
             res.redirect('/login')
         })
-        console.log(error)
+        
     })
 }
 
@@ -27,7 +29,24 @@ exports.mustBeLogedIn = (req,res,next) => {
         })
     }
 }
-
+exports.logedUser = async (req,res,next)=>{
+    let user = new User()
+    try {
+        let results = await user.findById(req.params._id)
+        req.profileUser = results
+        if (results._id == req.session.user.user_id) {
+            next()
+        } else {
+            req.flash('postError','you dont have permission to access')
+            req.session.save(function(){
+                res.redirect(`/profile/${results._id}`)
+            })
+        }
+        next()
+    } catch (error) {
+        res.render('error')
+    }
+}
 exports.userExsist = async (req,res,next)=>{
     let user = new User()
     try {
@@ -67,14 +86,20 @@ exports.uploadAudio = async (req,res,next)=>{
         await res.send({ success: true })
         res.redirect('/')
     } catch (error) {
-        console.log(error)
+        res.render('err')
     }
     
     // res.redirect('/')
 }
 
 exports.loginPage = (req,res)=>{
-    res.render('login-page',{errors:req.flash('errors')})
+    if (req.session.user) {
+        req.session.save(()=>{
+            res.redirect(`/`)
+        })
+    } else {
+        res.render('login-page',{errors:req.flash('errors')})
+    }
 }
 
 exports.logout = (req,res)=>{
@@ -100,17 +125,58 @@ exports.register = (req,res)=>{
     })
 }
 exports.registerPage = (req,res)=>{
-    res.render('register-page',{regerr:req.flash('regerr')})
+    if (req.session.user) {
+        req.session.save(()=>{
+            res.redirect(`/`)
+        })
+    } else {
+        res.render('register-page',{regerr:req.flash('regerr')})
+    }
 }
-exports.profile = (req,res)=>{
-    res.render('profile',{user:req.profileUser,correntUser:req.session.user,postErr:req.flash('posrtErr')})
-    console.log(req.profileUser)
+exports.profile = async (req,res)=>{
+    try {
+        let post = new Post()
+        let posts = await post.findPosts(req.profileUser._id)
+        req.posts = posts
+        req.posts_text = postsType.textPosts(posts)
+        req.posts_audio = postsType.voicePosts(posts)
+        res.render('profile',{
+            user:req.profileUser,
+            correntUser:req.session.user,
+            posts:posts,
+            voice_posts:req.posts_audio,
+            text_posts:req.posts_text,
+            postErr:req.flash('posrtErr')
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
+    
+}
+exports.editProfile = (req,res)=>{
+    res.render('edit-profile',{user:req.profileUser,postErr:req.flash('posrtErr')})
+}
+exports.editProfileEnfo = (req,res)=>{
+    let user = new User(req.body)
+    user.editProfileInfo(req.params._id)
+    .then((result) => {
+        req.session.user = {username:result.username,user_id:result._id}
+        req.session.save(()=>{
+            res.redirect(`/`)
+        })
+    }).catch((err) => {
+        req.flash('postError',err)
+        req.session.save(function(){
+            res.redirect(`/edit-profile/${req.session.user.user_id}}`)
+        })
+    });
 }
 
 exports.home = (req,res)=>{
     if (req.session.user) {
         req.session.save(()=>{
-            res.redirect(`/profile/${req.session.user.user_id}`)
+            res.redirect(`profile/${req.session.user.user_id}`)
         })
     } else {
         res.render('home-guests',{errors:req.flash('errors')})

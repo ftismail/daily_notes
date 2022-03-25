@@ -51,6 +51,20 @@ class Post {
             
         })
     }
+    findPosts(authorId){
+        return new Promise( async(resolve,reject)=>{
+            try {
+                let posts = await postsCollection.aggregate([
+                    {$match:{author:authorId}},
+                    {$sort:{date:-1}}
+                ]).toArray()
+                resolve(posts)
+            } catch (error) {
+                reject(error)
+            }
+            
+        })
+    }
 }
 
 
