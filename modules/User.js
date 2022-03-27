@@ -140,7 +140,6 @@ class User {
 
         })
     }
-
     editProfileInfo(user_id){
         return new Promise( async(resolve,reject)=>{
             if (!this.errors.length) {

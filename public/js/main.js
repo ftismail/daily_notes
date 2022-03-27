@@ -1,19 +1,8 @@
-const file_img = document.getElementById('upload_img')
-const profileImg = document.querySelector('.ava-container')
+
 const voiceContainer = document.querySelector('.voice-container')
 const voiceIcon = document.querySelector('.fa-microphone')
 const closeIcon = document.querySelector('.fa-times')
-let x = false
-// profileImg.addEventListener('click',()=>{
-//     if (!x) {
-//       file_img.style.minHeight = '100px'
-//       x = !x
-//     } else {
-//       file_img.style.minHeight = '0px'
-//       x = !x
-//     }
-    
-// })
+
 
 voiceIcon.addEventListener('click',()=>{
     voiceContainer.classList.add('scale')

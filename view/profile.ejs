@@ -47,10 +47,6 @@
                 <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar">
             <%}%>
         </div>
-        <div class="col-sm-12 profile-actions text-end">
-            <button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Friends</button>
-            <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i> Send Message</button>
-        </div>
     </div>
     <div class="content">
 
@@ -107,7 +103,7 @@
                                         <textarea name="post" class="form-control" style="height: 70px;margin-bottom:10px;" placeholder="Whats on your mind..."></textarea>
                                         <div class="row">
                                         <div class="col-sm-6">
-                                            <a class="bg-white btn btn-sm btn-default pe-auto"><i class="fa-solid fa-microphone fa-3x"></i></a>
+                                            <a class="bg-white btn btn-sm btn-default cursor-pointer"><i class="fa-solid fa-microphone fa-3x"></i></a>
                                         </div>
                                         <div class="col-sm-6 text-end"><button type="submit" class="btn btn-primary">Post</button></div>
                                         </div>
@@ -133,13 +129,51 @@
                         <!-- End Tab user messages -->
                     </div><!-- End div .tab-content -->
                 </div><!-- End div .box-info -->
+                <div class="vider d-flex align-items-center">
+                  <div class="first-line me-2 bg-info w-50 "></div>
+                  <h2>Notes</h2>
+                  <div class="first-line ms-2 bg-info w-50"></div>
+                </div>
+                <div class=" posts_container  m-2">
+                <% posts.map((post)=>{%>
+                        <div class="post fs-6 d-flex bg-white p-2 justify-content-between 
+                        rounded">
+                          <div class=" w-50 text_container">
+                            <span class="text-muted fs-6"> on <%= post.date.getDate() %>/<%= post.date.getMonth() + 1 %>/<%= post.date.getFullYear() %> </span>
+                            <h5><%=user.username%></h5>
+                            <th></th>
+                          </div>
+                          <div class="w-50 icon d-flex flex-column align-items-end">
+                            <a class="cursor-pointer" href="/edit-post/<%=post._id%>"><i class="far fa-edit "></i></a>
+                            <form action="/delet-post/<%=post._id%>" method="post">
+                              <button class="btn p-0 pe-1" type="submit"><i class="fa-solid fa-xmark mt-2 cursor-pointer"></i></button>
+                            </form>
+                          </div>
+                          <div class="postss w-100">
+                            <%if(post.type=='text'){%>
+                              <p class="d-inline-block text-truncate" style="max-width: 100%;"><%=post.post%></p>
+                              <%if(post.post.length >= 50){%>
+                                <a href="/single-post/<%=post._id%>" class="cursor-pointer">read more</a>
+                              <%}%>
+                            <%}else{%>
+                              <audio controls >
+                                <source src="/audio/<%=post.post%>" type="audio/mpeg">
+                              </audio>
+                            <%}%>
+                          </div>
+                        </div>
+                <%})%>
+              </div>
+                
+                
+
             </div>
         </div>
     </div>	
 </div>
 
 <div class="voice-container">
-  <a href='/profile/<%=correntUser.user_id%>' class="fa-times"><i class="pe-auto fas fa-times fa-2x"></i></a>
+  <a href='/profile/<%=correntUser.user_id%>' class="fa-times"><i class="cursor-pointer fas fa-times fa-2x"></i></a>
   <div class="container">
     <h1 class="text-center">Record Your Voice</h1>
     <div class="record-button-container text-center mt-5">

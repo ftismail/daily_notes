@@ -10,7 +10,8 @@ router.get('/sign-up', userController.registerPage )
 router.get('/login', userController.loginPage )
 router.get('/profile/:_id',userController.mustBeLogedIn,userController.userExsist,userController.profile)
 router.get('/edit-profile/:_id',userController.mustBeLogedIn,userController.logedUser,userController.editProfile)
-router.get('/posts', postsController.getPosts )
+router.get('/edit-post/:_id',postsController.isAuthor,postsController.editPostView)
+router.get('/single-post/:_id',postsController.getPost,postsController.getAuthor,postsController.singlePostView)
 ///post///
 router.post('/register',userController.register)
 router.post('/login',userController.login)
@@ -19,4 +20,7 @@ router.post('/upload', upload.single('photo'), userController.upload);
 router.post('/record',uploadAudio.single('audio'),postsController.uploadAudio)
 router.post('/post',postsController.createPost)
 router.post('/mod-profile/:_id',userController.mustBeLogedIn,userController.editProfileEnfo)
+router.post('/delet-post/:_id',postsController.isAuthor,postsController.deletPost)
+router.post('/edit-post/:_id',postsController.isAuthor,postsController.editPost)
+
 module.exports = router

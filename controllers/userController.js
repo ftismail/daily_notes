@@ -6,7 +6,7 @@ exports.login = (req,res)=>{
     let user = new User(req.body)
     user.login()
     .then((result)=>{
-        req.session.user={username:result.username,user_id:result._id}
+        req.session.user={username:result.username,user_id:result._id,img:result.img}
         req.session.save(()=>{
             res.redirect(`/profile/${req.session.user.user_id}`)
         })
@@ -146,9 +146,10 @@ exports.profile = async (req,res)=>{
             posts:posts,
             voice_posts:req.posts_audio,
             text_posts:req.posts_text,
-            postErr:req.flash('posrtErr')
+            postErr:req.flash('posrtErr'),
         })
-    } catch (error) {
+    } 
+    catch (error) {
         console.log(error)
     }
     

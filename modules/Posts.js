@@ -1,4 +1,5 @@
 const postsCollection = require('../db').db().collection('posts')
+const userCollection = require('../db').db().collection('users')
 const ObjectId = require('mongodb').ObjectId
 const sanitizeHtml = require('sanitize-html')
 class Post {
@@ -63,6 +64,75 @@ class Post {
                 reject(error)
             }
             
+        })
+    }
+    findPost(authorId){
+        return new Promise( async(resolve,reject)=>{
+            try {
+                let post = await postsCollection.findOne({_id:new ObjectId(authorId)})
+                resolve(post)
+            } catch (error) {
+                reject(error)
+            }
+            
+        })
+    }
+
+    findAuthor(authorId){
+        return new Promise( async(resolve,reject)=>{
+            try {
+                let post = await userCollection.findOne({_id:new ObjectId(authorId)})
+                resolve(post)
+            } catch (error) {
+                reject(error)
+            }
+            
+        })
+    }
+
+    isAuthor(post_id,visitor_id){
+        return new Promise(async(resolve,reject)=>{
+            if ( typeof(post_id) != 'string' || !ObjectId.isValid(post_id) ) {
+                reject()
+                return
+            }
+            try {
+                let post = await postsCollection.findOne({_id:new ObjectId(post_id)})
+                if (post.author  == visitor_id ) {
+                    resolve(post)
+                } else {
+                    reject('you dont have the permission to delet post')
+                }
+            } catch (error) {
+                reject('from sec')
+            }
+        })
+    }
+    deletPost(post_id){
+        return new Promise(async (resolve,reject)=>{
+            try {
+                let post = await postsCollection.deleteOne({_id:new ObjectId(post_id)})
+                resolve(post)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    editPost(post_id,body){
+        return new Promise(async(resolve,reject)=>{
+            try {
+                let pos = await postsCollection.findOne({_id: new ObjectId( post_id)})
+                
+                if (pos.type == 'text') {
+                    let post = await postsCollection.findOneAndUpdate({_id: new ObjectId( pos._id)},{$set:{post:body.post,show:body.show}},{returnNewDocument: true})
+                    resolve(post)
+                } else {
+                    let post = await postsCollection.findOneAndUpdate({_id: new ObjectId( pos._id)},{$set:{show:body.show}},{returnNewDocument: true})
+                    resolve(post)
+                }
+            } catch (error) {
+                reject(error)
+            }
         })
     }
 }
