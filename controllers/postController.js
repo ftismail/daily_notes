@@ -1,3 +1,4 @@
+const weekPosts = require('../middlewares/weekPosts')
 const Post = require("../modules/Posts");
 exports.uploadAudio = (req,res)=>{
     let post = new Post()
@@ -25,11 +26,13 @@ exports.createPost = (req,res)=>{
 }
 exports.getPosts = (req,res,next)=>{
     let posts = new Post()
-    posts.findPosts(req.profile._id)
+    posts.findPosts(req.profileUser)
     .then((result) => {
+        req.posts = result
         console.log(result)
+        next()
     }).catch((err) => {
-        console.log(err)
+        res.send(err)
     });
 }
 exports.getPost=(req,res,next)=>{
@@ -91,6 +94,23 @@ exports.editPost = (req,res)=>{
     });
 }
 exports.singlePostView = (req,res)=>{
-    console.log(req.author)
     res.render('single-post',{post:req.post,author:req.author,currentUser:req.session.user})
+}
+
+exports.weekPage = async (req,res)=>{
+    try {
+        let post = new Post()
+        let posts = await post.findPosts(req.profileUser._id)
+        let weekPost = weekPosts.weeks(posts)
+        console.log(weekPost)
+        req.posts = posts
+        res.render('week-posts',{posts: weekPost ,user:req.profileUser})
+    } catch (error) {
+        console.log(error)
+    }
+    // let posts = req.posts
+    // console.log(req.posts)
+    ;
+    
+    
 }

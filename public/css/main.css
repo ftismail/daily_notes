@@ -374,3 +374,20 @@ textarea.tall-textarea {
   outline: none;
   font-size: .75rem;
 }
+.text_container text{
+  word-wrap: break-word;
+}
+.post{
+	flex-wrap: wrap;
+  }
+  /* .postss{
+  } */
+  audio{
+	width: 100%;
+  }
+  .cursor-pointer{
+	cursor: pointer;
+  }
+  .header-bar {
+	background-color: #292929;
+  }

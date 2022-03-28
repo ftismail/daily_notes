@@ -42,7 +42,6 @@ exports.logedUser = async (req,res,next)=>{
                 res.redirect(`/profile/${results._id}`)
             })
         }
-        next()
     } catch (error) {
         res.render('error')
     }
@@ -71,17 +70,6 @@ exports.upload = (req,res)=>{
 }
 
 exports.uploadAudio = async (req,res,next)=>{
-    // let user = new User()
-    // user.uploadImg(req.session.user.user_id,req)
-    // .then((results)=>{
-    //     req.userImg = results.img
-    //     req.session.save(()=>{
-    //         res.redirect(`/profile/${req.session.user.user_id}`)
-    //     })
-    // })
-    // .catch((err)=>{
-    //     res.redirect('error')
-    // })
     try {
         await res.send({ success: true })
         res.redirect('/')

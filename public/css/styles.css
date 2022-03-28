@@ -783,7 +783,7 @@ input[type='checkbox'] {
 /*    04. Header     */
 /*********************/
 .header {
-	background-color: #5f4dee;
+	background-color: #000;
 }
 
 .header .header-content {
@@ -1585,7 +1585,7 @@ a:hover.back-to-top {
 /****************************************/
 .ex-2-header {
 	padding-top: 9rem;
-	background-color: #5f4dee;
+	background-color: #000;
 	text-align: center;
 	min-height: 100vh;
 }
@@ -1594,6 +1594,8 @@ a:hover.back-to-top {
 .ex-2-header p {
 	color: #fff;
 }
+
+  
 
 .ex-2-header p {
 	max-width: 24rem;
@@ -2169,3 +2171,21 @@ a:hover.back-to-top {
 	height: 100%;
 }
 /* end of min-width width 1200px */
+
+.text_container text{
+	word-wrap: break-word;
+  }
+  .post{
+	  flex-wrap: wrap;
+	}
+	/* .postss{
+	} */
+	audio{
+	  width: 100%;
+	}
+	.cursor-pointer{
+	  cursor: pointer;
+	}
+	.header-bar {
+	  background-color: #292929;
+	}

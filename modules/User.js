@@ -130,7 +130,7 @@ class User {
                     resolve(doc)
                 }
                 else{
-                    reject()
+                    reject("here")
                 }
             })
             .catch((err)=>{

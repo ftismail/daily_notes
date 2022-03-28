@@ -12,6 +12,7 @@ router.get('/profile/:_id',userController.mustBeLogedIn,userController.userExsis
 router.get('/edit-profile/:_id',userController.mustBeLogedIn,userController.logedUser,userController.editProfile)
 router.get('/edit-post/:_id',postsController.isAuthor,postsController.editPostView)
 router.get('/single-post/:_id',postsController.getPost,postsController.getAuthor,postsController.singlePostView)
+router.get('/week-notes/:_id',userController.mustBeLogedIn,userController.logedUser,postsController.weekPage)
 ///post///
 router.post('/register',userController.register)
 router.post('/login',userController.login)
