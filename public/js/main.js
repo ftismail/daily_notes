@@ -30,7 +30,10 @@ let audioBlob = null
 recorButton.addEventListener('click',record)
 function record(){
     //check if browser supports getUserMedia
-    
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert('Your browser does not support recording!');
+        return;
+    }
   
   // browser supports getUserMedia
   // change image in button
