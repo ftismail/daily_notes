@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "watch": "nodemon db",
+    "start": "node db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
