@@ -5,3 +5,4 @@ mongodb.connect(process.env.CONNECT_STRING,{useNewUrlParser:true},function(err,c
     const app = require('./app')
     app.listen(process.env.PORT, () => console.log(`db.donnected`))
 })
+
