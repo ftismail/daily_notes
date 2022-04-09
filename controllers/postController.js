@@ -5,9 +5,8 @@ exports.uploadAudio = (req,res)=>{
     post.voicePost(req,req.session.user.user_id)
     .then((result) => {
         res.send({ 'wow': true })
-        console.log(result)
     }).catch((err) => {
-        console.log(err)
+        res.render('error')
     });
 }
 exports.createPost = (req,res)=>{
@@ -29,7 +28,6 @@ exports.getPosts = (req,res,next)=>{
     posts.findPosts(req.profileUser)
     .then((result) => {
         req.posts = result
-        console.log(result)
         next()
     }).catch((err) => {
         res.send(err)
@@ -73,7 +71,6 @@ exports.deletPost = (req,res)=>{
     post.deletPost(req.params._id)
     .then((result) => {
         res.redirect(`/profile/${req.session.user.user_id}`)
-        console.log(result)
     }).catch((err) => {
         req.flash('posrtErr',err)
         req.session.save(()=>{
@@ -90,7 +87,7 @@ exports.editPost = (req,res)=>{
     .then((result) => {
         res.redirect('/')
     }).catch((err) => {
-        console.log(err)
+        res.render('error')
     });
 }
 exports.singlePostView = (req,res)=>{
@@ -102,15 +99,21 @@ exports.weekPage = async (req,res)=>{
         let post = new Post()
         let posts = await post.findPosts(req.profileUser._id)
         let weekPost = weekPosts.weeks(posts)
-        console.log(weekPost)
         req.posts = posts
         res.render('week-posts',{posts: weekPost ,user:req.profileUser})
-    } catch (error) {
-        console.log(error)
     }
-    // let posts = req.posts
-    // console.log(req.posts)
-    ;
-    
-    
+    catch (error) {
+        res.redirect('error')
+    }
+}
+
+exports.uploadFiles = (req,res)=>{
+    let file = new Post()
+    file.uploadFiles(req,req.session.user.user_id)
+    .then((result) => {
+        res.redirect('/')
+        console.log(result)
+    }).catch((err) => {
+        console.log(err)
+    });
 }

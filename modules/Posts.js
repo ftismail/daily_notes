@@ -32,9 +32,23 @@ class Post {
             }
         })
     }
+
+    uploadFiles(req,id){
+        return new Promise(async(resolve,reject)=>{
+            try {
+                if(req.file){
+                let file = await postsCollection.insertOne({post:req.file.filename,type:'file',show:'private',date:new Date(),author:new ObjectId(id)})
+                resolve(file)
+                }
+                
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
     createPost(){
         return new Promise(async(resolve,reject)=>{
-            
             this.cleanUp()
             this.validation()
             if (!this.error.length) {

@@ -129,6 +129,7 @@
                                         <div class="row">
                                         <div class="col-6">
                                             <a class="bg-white btn btn-sm btn-default cursor-pointer"><i class="fa-solid fa-microphone fa-3x"></i></a>
+                                            <a class="bg-white btn btn-sm btn-default cursor-pointer"><i class="fas fa-file-upload fa-3x"></i></a>
                                         </div>
                                         <div class=" col-6 text-end d-flex flex-column justify-content-center d-sm-block"><button type="submit" class="btn btn-primary">Post</button></div>
                                         </div>
@@ -190,11 +191,14 @@
                                   <%if(post.post.length >= 50){%>
                                     <a href="/single-post/<%=post._id%>" class="cursor-pointer">read more</a>
                                   <%}%>
-                                <%}else{%>
+                                <%}else if(post.type=='audio'){%>
                                   <audio controls >
                                     <source src="/audio/<%=post.post%>" type="audio/mpeg">
                                   </audio>
+                                <%}else{%>
+                                  <a href="/download/<%=post.post%>"><i class="fas fa-download"></i></a>
                                 <%}%>
+
                               </div>
                             </div>
                           </div>
@@ -230,11 +234,13 @@
                                   <%if(post.post.length >= 50){%>
                                     <a href="/single-post/<%=post._id%>" class="cursor-pointer">read more</a>
                                   <%}%>
-                                <%}else{%>
+                                <%}else if(post.type=='audio'){%>
                                   <audio controls >
                                     <source src="/audio/<%=post.post%>" type="audio/mpeg">
                                   </audio>
-                                <%}%>
+                                <%}else%>
+                                <a href="/download/<%=post.post%>"><i class="fas fa-download"></i></a>
+                                }
                               </div>
                             </div>
                             </div>
@@ -254,7 +260,7 @@
 </div>
 
 <div class="voice-container">
-  <a href='/profile/<%=correntUser.user_id%>' class="fa-times"><i class="cursor-pointer fas fa-times fa-2x"></i></a>
+  <a href='/profile/<%=correntUser.user_id%>' id="fa-times"><i class="cursor-pointer fas fa-times fa-2x"></i></a>
   <div class="container">
     <h1 class="text-center">Record Your Voice</h1>
     <div class="record-button-container text-center mt-5">
@@ -270,7 +276,19 @@
     </div>
   </div>
 </div>
+
+<div class="upload-file_container">
+  <i id="file_close" class="cursor-pointer fas fa-times fa-2x"></i>
+  <form action="/upload-files" method="POST" enctype="multipart/form-data">
+    <input type="file" name="files">
+    <button type="submit" class="btn btn-info">Upload</button>
+  </form>
 </div>
+
+
+
+</div>
+
 <footer class="bg-dark border-top text-center small text-muted py-3">
   <p class="m-0">Copyright &copy; 2022 <a href="/" class="text-muted">CoopWED.com</a>. All rights reserved.</p>
 </footer>

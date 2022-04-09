@@ -1,17 +1,28 @@
-
 const voiceContainer = document.querySelector('.voice-container')
 const voiceIcon = document.querySelector('.fa-microphone')
-const closeIcon = document.querySelector('.fa-times')
-
-
-voiceIcon.addEventListener('click',()=>{
-    voiceContainer.classList.add('scale')
-    console.log('done')
-})
-closeIcon.addEventListener('click',()=>{
-    voiceContainer.classList.remove('scale')
-    voiceContainer.style.opacity ='0'
-})
+const closeIcon = document.querySelector('#fa-times')
+const fileIcon = document.querySelector('.fa-file-upload')
+const fileContainer = document.querySelector('.upload-file_container')
+const closes = document.querySelector('#file_close')
+function open (clicked,con,clo){
+  clicked.addEventListener('click',()=>{
+    con.classList.add('scale')
+    console.log('one')
+  })
+  clo.addEventListener('click',()=>{
+    con.classList.remove('scale')
+    con.style.opacity ='0'
+  })
+}
+open(voiceIcon,voiceContainer,closeIcon)
+open(fileIcon,fileContainer,closes)
+// voiceIcon.addEventListener('click',()=>{
+//     voiceContainer.classList.add('scale')
+// })
+// closeIcon.addEventListener('click',()=>{
+//     voiceContainer.classList.remove('scale')
+//     voiceContainer.style.opacity ='0'
+// })
 
 
 
