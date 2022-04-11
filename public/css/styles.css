@@ -2189,3 +2189,13 @@ a:hover.back-to-top {
 	.header-bar {
 	  background-color: #292929;
 	}
+	header{
+		background-color:black
+	}
+	header ul{
+		display: flex;
+		flex-wrap: nowrap !important;
+		flex-direction: row!important;
+		align-items: center;
+
+	}
